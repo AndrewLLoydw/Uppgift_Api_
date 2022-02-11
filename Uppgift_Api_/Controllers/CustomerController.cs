@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Uppgift_Api_;
+using Uppgift_Api_.Models;
 using Uppgift_Api_.Models.Entities;
 
 namespace Uppgift_Api_.Controllers
@@ -22,12 +23,23 @@ namespace Uppgift_Api_.Controllers
             _context = context;
         }
 
+
+
+
         // GET: api/Customer
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerEntity>>> GetCustomers()
+        public async Task<ActionResult<IEnumerable<CustomerModel>>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            var items = new List<CustomerModel>();
+            foreach (var item in await _context.Customers.ToListAsync())
+                items.Add(new CustomerModel(item.Id, item.FirstName, item.LastName, item.Email));
+
+            return items;
         }
+
+
+
+
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
@@ -42,6 +54,11 @@ namespace Uppgift_Api_.Controllers
 
             return customerEntity;
         }
+
+
+
+
+
 
         // PUT: api/Customer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -74,6 +91,11 @@ namespace Uppgift_Api_.Controllers
             return NoContent();
         }
 
+
+
+
+
+
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -84,6 +106,11 @@ namespace Uppgift_Api_.Controllers
 
             return CreatedAtAction("GetCustomerEntity", new { id = customerEntity.Id }, customerEntity);
         }
+
+
+
+
+
 
         // DELETE: api/Customer/5
         [HttpDelete("{id}")]

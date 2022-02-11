@@ -1,8 +1,18 @@
-﻿namespace Uppgift_Api_.Models.Update
+﻿namespace Uppgift_Api_.Models
 {
-    public class ProductUpdate
+    public class ProductModel
     {
-        public ProductUpdate(int productNumber, string productName, string productDescription, decimal productPrice )
+        public ProductModel()
+        {
+
+        }
+
+        public ProductModel(decimal productPrice)
+        {
+            ProductPrice = productPrice;
+        }
+
+        public ProductModel(int productNumber, string productName, string productDescription, decimal productPrice)
         {
             ProductNumber = productNumber;
             ProductName = productName;
